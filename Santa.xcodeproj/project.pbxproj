@@ -74,6 +74,9 @@
 		0D536ED81B8E7A2E0039A26D /* missing_pagezero in Resources */ = {isa = PBXBuildFile; fileRef = 0D536ED61B8E7A2E0039A26D /* missing_pagezero */; };
 		0D536EDB1B94E9230039A26D /* SNTEventLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D536EDA1B94E9230039A26D /* SNTEventLog.m */; };
 		0D536EDC1B94E9230039A26D /* SNTEventLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D536EDA1B94E9230039A26D /* SNTEventLog.m */; };
+		0D5AD02C1E8063090028D7E0 /* EventLog.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D0BA1921C9872CC00A8EDF6 /* EventLog.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0D5AD02D1E80630D0028D7E0 /* EventLog.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D0BA1921C9872CC00A8EDF6 /* EventLog.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0D5AD02E1E80630E0028D7E0 /* EventLog.pbobjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D0BA1921C9872CC00A8EDF6 /* EventLog.pbobjc.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0D63DD5C1906FCB400D346C4 /* SNTDatabaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D63DD5B1906FCB400D346C4 /* SNTDatabaseController.m */; };
 		0D63DD5E1906FCB400D346C4 /* SNTDatabaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D63DD5B1906FCB400D346C4 /* SNTDatabaseController.m */; };
 		0D668E8118D1121700E29A8B /* SNTMessageWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D668E8018D1121700E29A8B /* SNTMessageWindow.m */; };
@@ -82,6 +85,7 @@
 		0D7D01871774F93A005DBAB4 /* SNTDriverManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D7D01861774F93A005DBAB4 /* SNTDriverManager.m */; };
 		0D827E6519DF392E006EC811 /* SNTConfigurator.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D42D2B719D2042900955F08 /* SNTConfigurator.m */; };
 		0D827E6719DF3C74006EC811 /* SNTCommandStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D827E6619DF3C74006EC811 /* SNTCommandStatus.m */; };
+		0D864DA61D3044E300015519 /* SNTCommandLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D202D211CE4F05B00A88F16 /* SNTCommandLog.m */; };
 		0D8868091AC48A1100B86659 /* SNTSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D42D2B419D1D98A00955F08 /* SNTSystemInfo.m */; };
 		0D88680A1AC48A1200B86659 /* SNTSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D42D2B419D1D98A00955F08 /* SNTSystemInfo.m */; };
 		0D88680C1AC48A1400B86659 /* SNTSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D42D2B419D1D98A00955F08 /* SNTSystemInfo.m */; };
@@ -129,6 +133,8 @@
 		0DD0D48F194F78F8005F27EB /* SNTFileInfoTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DD0D48E194F78F8005F27EB /* SNTFileInfoTest.m */; };
 		0DD0D491194F9947005F27EB /* SNTExecutionControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DD0D490194F9947005F27EB /* SNTExecutionControllerTest.m */; };
 		0DD0D492194F9BEF005F27EB /* SNTLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA73C9E1934F8100056D7C4 /* SNTLogging.m */; };
+		0DE2CE511C9C9EC8002B649A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE2CE4F1C9C9EC3002B649A /* libz.tbd */; };
+		0DE2CE521C9CA2EC002B649A /* NSData+Zlib.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DF395631AB76A7900CBC520 /* NSData+Zlib.m */; };
 		0DE2CE561CA05561002B649A /* SNTAccessibleTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2CE551CA05561002B649A /* SNTAccessibleTextField.m */; };
 		0DE4C8A618FF3B1700466D04 /* SNTCommandFlushCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE4C8A518FF3B1700466D04 /* SNTCommandFlushCache.m */; };
 		0DE50F681912716A007B2B0C /* SNTRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE50F671912716A007B2B0C /* SNTRule.m */; };
@@ -140,6 +146,7 @@
 		0DE6788D1784A8C2007A9E52 /* SNTExecutionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE6788C1784A8C2007A9E52 /* SNTExecutionController.m */; };
 		0DE71A751B95F7F900518526 /* SNTCachedDecision.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE71A741B95F7F900518526 /* SNTCachedDecision.m */; };
 		0DE71A761B95F7F900518526 /* SNTCachedDecision.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE71A741B95F7F900518526 /* SNTCachedDecision.m */; };
+		0DEA1C2D1CA1D91300821D9C /* NSData+ZlibTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DEA1C2C1CA1D91300821D9C /* NSData+ZlibTests.m */; };
 		0DEA5F651CF6057D00704398 /* SNTCommandSyncEventUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D41640419197AD7006A356A /* SNTCommandSyncEventUpload.m */; };
 		0DEA5F6C1CF6254900704398 /* sync_preflight_lockdown.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DEA5F641CF6000600704398 /* sync_preflight_lockdown.json */; };
 		0DEA5F741CF63B9600704398 /* sync_eventupload_input_quarantine.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0DEA5F731CF639BE00704398 /* sync_eventupload_input_quarantine.plist */; };
@@ -254,6 +261,8 @@
 		0D0A1EC2191998C900B8450F /* SNTCommandSyncRuleDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTCommandSyncRuleDownload.m; sourceTree = "<group>"; };
 		0D0A1EC4191AB9B000B8450F /* SNTCommandSyncPostflight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTCommandSyncPostflight.h; sourceTree = "<group>"; };
 		0D0A1EC5191AB9B000B8450F /* SNTCommandSyncPostflight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTCommandSyncPostflight.m; sourceTree = "<group>"; };
+		0D0BA1911C9872CC00A8EDF6 /* EventLog.pbobjc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventLog.pbobjc.h; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D0BA1921C9872CC00A8EDF6 /* EventLog.pbobjc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventLog.pbobjc.m; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D10BE851A0AABD600C0C944 /* SNTDropRootPrivs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTDropRootPrivs.m; sourceTree = "<group>"; };
 		0D10BE881A0AAC2100C0C944 /* SNTDropRootPrivs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SNTDropRootPrivs.h; sourceTree = "<group>"; };
 		0D1B476D19A53419008CADD3 /* SNTAboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTAboutWindowController.h; sourceTree = "<group>"; };
@@ -262,6 +271,7 @@
 		0D202D181CDD2EE500A88F16 /* SNTCommandSyncTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTCommandSyncTest.m; sourceTree = "<group>"; };
 		0D202D1D1CDD479400A88F16 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		0D202D1F1CE4E90E00A88F16 /* sync_preflight_basic.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sync_preflight_basic.json; sourceTree = "<group>"; };
+		0D202D211CE4F05B00A88F16 /* SNTCommandLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTCommandLog.m; sourceTree = "<group>"; };
 		0D202D231CE5071600A88F16 /* SantaCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SantaCache.h; sourceTree = "<group>"; };
 		0D2429471E787655005C6FC9 /* DevelopmentTeam.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = DevelopmentTeam.xcconfig; sourceTree = "<group>"; };
 		0D260DAC18B68E12002A0B55 /* LogicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LogicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -312,6 +322,7 @@
 		0D536ED61B8E7A2E0039A26D /* missing_pagezero */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = missing_pagezero; sourceTree = "<group>"; };
 		0D536ED91B94E9230039A26D /* SNTEventLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTEventLog.h; sourceTree = "<group>"; };
 		0D536EDA1B94E9230039A26D /* SNTEventLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTEventLog.m; sourceTree = "<group>"; };
+		0D5AD02B1E805CA20028D7E0 /* EventLog.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = EventLog.proto; path = Source/common/EventLog.proto; sourceTree = SOURCE_ROOT; };
 		0D63DD5A1906FCB400D346C4 /* SNTDatabaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTDatabaseController.h; sourceTree = "<group>"; };
 		0D63DD5B1906FCB400D346C4 /* SNTDatabaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTDatabaseController.m; sourceTree = "<group>"; };
 		0D668E7F18D1121700E29A8B /* SNTMessageWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTMessageWindow.h; sourceTree = "<group>"; };
@@ -362,6 +373,7 @@
 		0DCD605B19117A90006B445C /* SNTCommandSyncPreflight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTCommandSyncPreflight.m; sourceTree = "<group>"; };
 		0DD0D48E194F78F8005F27EB /* SNTFileInfoTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTFileInfoTest.m; sourceTree = "<group>"; };
 		0DD0D490194F9947005F27EB /* SNTExecutionControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTExecutionControllerTest.m; sourceTree = "<group>"; };
+		0DE2CE4F1C9C9EC3002B649A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		0DE2CE541CA05561002B649A /* SNTAccessibleTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTAccessibleTextField.h; sourceTree = "<group>"; };
 		0DE2CE551CA05561002B649A /* SNTAccessibleTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTAccessibleTextField.m; sourceTree = "<group>"; };
 		0DE4C8A518FF3B1700466D04 /* SNTCommandFlushCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTCommandFlushCache.m; sourceTree = "<group>"; };
@@ -373,6 +385,7 @@
 		0DE6788C1784A8C2007A9E52 /* SNTExecutionController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SNTExecutionController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		0DE71A731B95F7F900518526 /* SNTCachedDecision.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SNTCachedDecision.h; sourceTree = "<group>"; };
 		0DE71A741B95F7F900518526 /* SNTCachedDecision.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SNTCachedDecision.m; sourceTree = "<group>"; };
+		0DEA1C2C1CA1D91300821D9C /* NSData+ZlibTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ZlibTests.m"; sourceTree = "<group>"; };
 		0DEA5F641CF6000600704398 /* sync_preflight_lockdown.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sync_preflight_lockdown.json; sourceTree = "<group>"; };
 		0DEA5F731CF639BE00704398 /* sync_eventupload_input_quarantine.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = sync_eventupload_input_quarantine.plist; sourceTree = "<group>"; };
 		0DEA5F751CF647E200704398 /* sync_eventupload_input_basic.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sync_eventupload_input_basic.plist; sourceTree = "<group>"; };
@@ -449,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E6BE2EABCDF090F0FCEA980 /* libPods-santad.a in Frameworks */,
+				0DE2CE511C9C9EC8002B649A /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -478,6 +492,7 @@
 				0D2E1E621CEFA6C30039B2C4 /* SantaCacheTest.mm */,
 				C72E8D931D7F399900C86DD3 /* SNTCommandFileInfoTest.m */,
 				0D202D181CDD2EE500A88F16 /* SNTCommandSyncTest.m */,
+				0DEA1C2C1CA1D91300821D9C /* NSData+ZlibTests.m */,
 				0D41DAD31A7C28C800A890FE /* SNTEventTableTest.m */,
 				0DD0D490194F9947005F27EB /* SNTExecutionControllerTest.m */,
 				0DD0D48E194F78F8005F27EB /* SNTFileInfoTest.m */,
@@ -528,8 +543,6 @@
 		0D35BDB618FD84FC00921A21 /* sync */ = {
 			isa = PBXGroup;
 			children = (
-				0DF395621AB76A7900CBC520 /* NSData+Zlib.h */,
-				0DF395631AB76A7900CBC520 /* NSData+Zlib.m */,
 				0D35BDB418FD84F600921A21 /* SNTCommandSync.m */,
 				0DEFB7C11ACB28BC00B92AAE /* SNTCommandSyncConstants.h */,
 				0DEFB7BF1ACB28B000B92AAE /* SNTCommandSyncConstants.m */,
@@ -661,6 +674,11 @@
 		0D91BCD5174E8AAB00131A7D /* common */ = {
 			isa = PBXGroup;
 			children = (
+				0D5AD02B1E805CA20028D7E0 /* EventLog.proto */,
+				0D0BA1911C9872CC00A8EDF6 /* EventLog.pbobjc.h */,
+				0D0BA1921C9872CC00A8EDF6 /* EventLog.pbobjc.m */,
+				0DF395621AB76A7900CBC520 /* NSData+Zlib.h */,
+				0DF395631AB76A7900CBC520 /* NSData+Zlib.m */,
 				0DB77FD61CCE824A004DF060 /* SNTBlockMessage.h */,
 				0DB77FD71CCE824A004DF060 /* SNTBlockMessage.m */,
 				0D91BCE4174E8B5E00131A7D /* SNTCommonEnums.h */,
@@ -751,6 +769,7 @@
 				C76614EB1D142D3C00D150C1 /* SNTCommandCheckCache.m */,
 				0DCD5FBE1909D64A006B445C /* SNTCommandFileInfo.m */,
 				0DE4C8A518FF3B1700466D04 /* SNTCommandFlushCache.m */,
+				0D202D211CE4F05B00A88F16 /* SNTCommandLog.m */,
 				409232791A51B65D00A04527 /* SNTCommandRule.m */,
 				0D827E6619DF3C74006EC811 /* SNTCommandStatus.m */,
 				0DB390981AB1E11400614002 /* SNTCommandVersion.m */,
@@ -837,6 +856,7 @@
 			buildPhases = (
 				C22A218D691E062A00781563 /* [CP] Check Pods Manifest.lock */,
 				0D673DAD18FC9017009C5B06 /* Delete existing coverage files */,
+				0D5AD02A1E805C650028D7E0 /* Compile Protobuf */,
 				0D260DA818B68E12002A0B55 /* Sources */,
 				0D260DA918B68E12002A0B55 /* Frameworks */,
 				0D260DAA18B68E12002A0B55 /* Resources */,
@@ -858,6 +878,7 @@
 			buildPhases = (
 				8EF1E72D9F742F663ABE8DCD /* [CP] Check Pods Manifest.lock */,
 				0DD98E671A5DD02000A754C6 /* Update Version Info */,
+				0D5AD02A1E805C650028D7E0 /* Compile Protobuf */,
 				0D35BD9A18FD71CE00921A21 /* Sources */,
 				0D35BD9B18FD71CE00921A21 /* Frameworks */,
 				3AA84DD536CCE6A50E24E85E /* [CP] Copy Pods Resources */,
@@ -920,6 +941,7 @@
 			buildPhases = (
 				828CFA7B34B9061FAFA68503 /* [CP] Check Pods Manifest.lock */,
 				0DD98E661A5DCED300A754C6 /* Update Version Info */,
+				0D5AD02A1E805C650028D7E0 /* Compile Protobuf */,
 				0D9A7F391759330400035EB5 /* Sources */,
 				0D9A7F3A1759330400035EB5 /* Frameworks */,
 				999D3C0A9B06CC3DFFB45CEA /* [CP] Copy Pods Resources */,
@@ -1016,6 +1038,23 @@
 			shellPath = /bin/sh;
 			shellScript = "GIT_TAG=$(git describe --abbrev=0 --tags)\nGIT_COMMIT=$(git rev-parse --short HEAD)\n\ncp ${SCRIPT_INPUT_FILE_0} ${SCRIPT_OUTPUT_FILE_0}\n\nif [ $CONFIGURATION = \"Debug\" ]; then\n  newVersion=\"${GIT_TAG}d ${GIT_COMMIT}\"\nelse\n  newVersion=\"${GIT_TAG}\"\nfi\n\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion ${GIT_TAG}\" ${SCRIPT_OUTPUT_FILE_0}\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString ${newVersion}\" ${SCRIPT_OUTPUT_FILE_0}";
 		};
+		0D5AD02A1E805C650028D7E0 /* Compile Protobuf */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Source/common/EventLog.proto",
+			);
+			name = "Compile Protobuf";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/EventLog.pbobjc.h",
+				"$(BUILT_PRODUCTS_DIR)/EventLog.pbobjc.m",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "pushd Source/common\n../../Pods/\\!ProtoCompiler/protoc --objc_out=${BUILT_PRODUCTS_DIR} EventLog.proto\npopd";
+		};
 		0D673DAD18FC9017009C5B06 /* Delete existing coverage files */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1088,6 +1127,7 @@
 			);
 			name = "Update Module Version";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/santa-driver_info.c",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1267,8 +1307,10 @@
 				0DB77FDB1CD14093004DF060 /* SNTBlockMessage.m in Sources */,
 				0D63DD5E1906FCB400D346C4 /* SNTDatabaseController.m in Sources */,
 				0D202D191CDD2EE500A88F16 /* SNTCommandSyncTest.m in Sources */,
+				0D5AD02E1E80630E0028D7E0 /* EventLog.pbobjc.m in Sources */,
 				0D3AFBF018FB4C6C0087BCEE /* SNTDriverManager.m in Sources */,
 				0DCD6044190ACCB8006B445C /* SNTFileInfo.m in Sources */,
+				0DEA1C2D1CA1D91300821D9C /* NSData+ZlibTests.m in Sources */,
 				0D6FDC9718C93A020044685C /* SNTXPCConnection.m in Sources */,
 				0D3AFBEB18FB48E70087BCEE /* SNTDatabaseTable.m in Sources */,
 				0DD0D491194F9947005F27EB /* SNTExecutionControllerTest.m in Sources */,
@@ -1322,6 +1364,7 @@
 				0D42D2B919D2042900955F08 /* SNTConfigurator.m in Sources */,
 				0DF395641AB76A7900CBC520 /* NSData+Zlib.m in Sources */,
 				C7FB56F71DBFB480004E14EF /* SNTXPCSyncdInterface.m in Sources */,
+				0D5AD02D1E80630D0028D7E0 /* EventLog.pbobjc.m in Sources */,
 				0D10BE871A0AABD600C0C944 /* SNTDropRootPrivs.m in Sources */,
 				0DE4C8A618FF3B1700466D04 /* SNTCommandFlushCache.m in Sources */,
 				4092327A1A51B66400A04527 /* SNTCommandRule.m in Sources */,
@@ -1333,6 +1376,7 @@
 				0DCD6043190ACCB8006B445C /* SNTFileInfo.m in Sources */,
 				0DE50F6E191304E0007B2B0C /* SNTRule.m in Sources */,
 				0D0A1EC3191998C900B8450F /* SNTCommandSyncRuleDownload.m in Sources */,
+				0D864DA61D3044E300015519 /* SNTCommandLog.m in Sources */,
 				0DB390991AB1E11400614002 /* SNTCommandVersion.m in Sources */,
 				0D42D2B519D1D98A00955F08 /* SNTSystemInfo.m in Sources */,
 				0D827E6719DF3C74006EC811 /* SNTCommandStatus.m in Sources */,
@@ -1393,8 +1437,10 @@
 				0DCD6042190ACCB8006B445C /* SNTFileInfo.m in Sources */,
 				0DEFB7C41ACDD80100B92AAE /* SNTFileWatcher.m in Sources */,
 				0DC5D86D191AED220078A5C0 /* SNTRuleTable.m in Sources */,
+				0D5AD02C1E8063090028D7E0 /* EventLog.pbobjc.m in Sources */,
 				0D7D01871774F93A005DBAB4 /* SNTDriverManager.m in Sources */,
 				0D8E18CD19107B56000F89B8 /* SNTDaemonControlController.m in Sources */,
+				0DE2CE521C9CA2EC002B649A /* NSData+Zlib.m in Sources */,
 				0D6FDC9618C93A020044685C /* SNTXPCConnection.m in Sources */,
 				0D377C2A17A071B7008453DB /* SNTEventTable.m in Sources */,
 				0DE50F681912716A007B2B0C /* SNTRule.m in Sources */,
@@ -1489,7 +1535,6 @@
 					"-fcxx-modules",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				WARNING_CFLAGS = "";
 			};
 			name = Debug;
@@ -1523,7 +1568,6 @@
 					"-fcxx-modules",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 				WARNING_CFLAGS = "";
 			};
 			name = Release;
@@ -1652,8 +1696,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${DERIVED_FILE_DIR}/santactl-Info.plist";
 				INSTALL_PATH = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.google.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1685,8 +1729,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${DERIVED_FILE_DIR}/santactl-Info.plist";
 				INSTALL_PATH = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.google.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
@@ -1723,8 +1767,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${DERIVED_FILE_DIR}/SantaGUI-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.google.${PRODUCT_NAME:rfc1034identifier}GUI";
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1757,8 +1801,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${DERIVED_FILE_DIR}/SantaGUI-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.google.${PRODUCT_NAME:rfc1034identifier}GUI";
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1772,15 +1816,31 @@
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 				WARNING_CFLAGS = (
@@ -1800,14 +1860,30 @@
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_CXX0X_EXTENSIONS = YES;
 				CODE_SIGN_IDENTITY = "Mac Developer";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PROVISIONING_PROFILE = "";
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 				WARNING_CFLAGS = (
@@ -1846,6 +1922,7 @@
 				MODULE_NAME = "com.google.santa-driver";
 				MODULE_VERSION = TO.BE.FILLED;
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.google.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WARNING_CFLAGS = (
@@ -1882,6 +1959,7 @@
 				MODULE_NAME = "com.google.santa-driver";
 				MODULE_VERSION = TO.BE.FILLED;
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.google.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WARNING_CFLAGS = (
 					"-Wno-deprecated-register",

@@ -17,6 +17,10 @@
 /// Category on NSData providing the option of getting zlib or gzip compressed data.
 @interface NSData (Zlib)
 
++ (BOOL)compressFile:(NSString *)path;
++ (BOOL)decompressFile:(NSString *)path fileHandle:(NSFileHandle *)fh;
++ (BOOL)decompressFile:(NSString *)path;
+
 - (NSData *)zlibCompressed;
 - (NSData *)gzipCompressed;
 

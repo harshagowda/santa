@@ -1,4 +1,6 @@
 PODS:
+  - '!ProtoCompiler (3.2.0)':
+    - Protobuf (~> 3.0)
   - FMDB (2.6.2):
     - FMDB/standard (= 2.6.2)
   - FMDB/standard (2.6.2)
@@ -10,23 +12,28 @@ PODS:
   - MOLFCMClient (1.3):
     - MOLAuthenticatingURLSession (~> 2.1)
   - OCMock (3.4)
+  - Protobuf (3.2.0)
 
 DEPENDENCIES:
+  - '!ProtoCompiler'
   - FMDB
   - MOLAuthenticatingURLSession
   - MOLCertificate
   - MOLCodesignChecker
   - MOLFCMClient (~> 1.3)
   - OCMock
+  - Protobuf
 
 SPEC CHECKSUMS:
+  '!ProtoCompiler': b66c7c0c1d911ad1490dcbfce30e1508739d8309
   FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   MOLAuthenticatingURLSession: 5a5e31eb73248c3e92c79b9a285f031194e8404c
   MOLCertificate: c39cae866d24d36fbc78032affff83d401b5384a
   MOLCodesignChecker: fc9c64147811d7b0d0739127003e0630dff9213a
   MOLFCMClient: 13d8b42db9d750e772f09cc38fc453922fece09f
   OCMock: 35ae71d6a8fcc1b59434d561d1520b9dd4f15765
+  Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
 
-PODFILE CHECKSUM: 1728b86e95e7cdb481dd91ab9c38af38e060a023
+PODFILE CHECKSUM: d152381cf7ff382f087baf6d3a58a06e23b4998f
 
 COCOAPODS: 1.2.0

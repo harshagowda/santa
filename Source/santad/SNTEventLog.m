@@ -20,6 +20,9 @@
 #include <sys/sysctl.h>
 
 #import "MOLCertificate.h"
+
+#import "EventLog.pbobjc.h"
+#import "NSData+Zlib.h"
 #import "SNTCachedDecision.h"
 #import "SNTCommonEnums.h"
 #import "SNTConfigurator.h"
@@ -34,13 +37,21 @@
 // Caches for uid->username and gid->groupname lookups.
 @property NSCache<NSNumber *, NSString *> *userNameMap;
 @property NSCache<NSNumber *, NSString *> *groupNameMap;
+
+@property dispatch_queue_t writingQueue;
+@property dispatch_source_t sighupSource;
+@property NSFileHandle *protoFileHandle;
+@property uint32_t protoMessagesSaved;
 @end
 
 @implementation SNTEventLog
 
+static NSString  * const kProtoFilePath = @"/var/db/santa/events.pblog";
+
 - (instancetype)init {
   self = [super init];
   if (self) {
+    _writingQueue = dispatch_queue_create("com.google.santa.protoqueue", DISPATCH_QUEUE_SERIAL);
     _detailStore = [NSMutableDictionary dictionaryWithCapacity:10000];
     _detailStoreQueue = dispatch_queue_create("com.google.santad.detail_store",
                                               DISPATCH_QUEUE_SERIAL);
@@ -49,8 +60,44 @@
     _userNameMap.countLimit = 100;
     _groupNameMap = [[NSCache alloc] init];
     _groupNameMap.countLimit = 100;
+
+    if ([[SNTConfigurator configurator] protoLogging]) {
+      LOGI(@"Protobuffer logging enabled");
+
+      [self rollOverFile];
+      _sighupSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_SIGNAL, SIGHUP, 0, _writingQueue);
+      dispatch_source_set_event_handler(_sighupSource, ^{
+        [self rollOverFile];
+      });
+      dispatch_resume(_sighupSource);
+    }
   }
   return self;
+}
+
+- (void)setupFileHandle {
+  [[NSFileManager defaultManager] createFileAtPath:kProtoFilePath
+                                          contents:nil
+                                        attributes:nil];
+  self.protoFileHandle = [NSFileHandle fileHandleForWritingAtPath:kProtoFilePath];
+}
+
+- (void)rollOverFile {
+  NSTimeInterval ti = [[NSDate date] timeIntervalSince1970];
+  NSString *newName = [kProtoFilePath stringByAppendingFormat:@".%llu", (uint64_t)ti];
+
+  [self.protoFileHandle closeFile];
+  if ([[NSFileManager defaultManager] moveItemAtPath:kProtoFilePath
+                                              toPath:newName
+                                               error:NULL]) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+      [NSData compressFile:newName];
+    });
+  }
+  [self setupFileHandle];
+  self.protoMessagesSaved = 0;
+
+  LOGI(@"Rolled over log file");
 }
 
 - (void)saveDecisionDetails:(SNTCachedDecision *)cd {
@@ -59,9 +106,72 @@
   });
 }
 
-- (void)logFileModification:(santa_message_t)message {
-  NSString *action, *newpath;
+#pragma mark File Modification
 
+- (void)protoFileModification:(santa_message_t)message {
+  SNTEventLogMessage *e = [[SNTEventLogMessage alloc] init];
+  e.timestamp = [[NSDate date] timeIntervalSince1970];
+  e.path = @(message.path);
+
+  switch (message.action) {
+    case ACTION_NOTIFY_DELETE: {
+      e.action = SNTEventLogMessage_Action_Delete;
+      break;
+    }
+    case ACTION_NOTIFY_EXCHANGE: {
+      e.action = SNTEventLogMessage_Action_Exchange;
+      e.fileopDetails.newpath = @(message.newpath);
+      break;
+    }
+    case ACTION_NOTIFY_LINK: {
+      e.action = SNTEventLogMessage_Action_Link;
+      e.fileopDetails.newpath = @(message.newpath);
+      break;
+    }
+    case ACTION_NOTIFY_RENAME: {
+      e.action = SNTEventLogMessage_Action_Rename;
+      e.fileopDetails.newpath = @(message.newpath);
+      break;
+    }
+    case ACTION_NOTIFY_WRITE: {
+      e.action = SNTEventLogMessage_Action_Write;
+      SNTFileInfo *fileInfo = [[SNTFileInfo alloc] initWithPath:e.path];
+      if (fileInfo.fileSize < 1024 * 1024) {
+        e.sha256 = fileInfo.SHA256;
+      } else {
+        e.sha256 = @"TOO LARGE";
+      }
+      break;
+    }
+    default:
+      return;
+  }
+
+  e.pid = message.pid;
+  e.ppid = message.ppid;
+  e.uid = message.uid;
+  e.gid = message.gid;
+
+  struct passwd *pw = getpwuid(message.uid);
+  if (pw) e.username = @(pw->pw_name);
+  struct group *gr = getgrgid(message.gid);
+  if (gr) e.groupname = @(gr->gr_name);
+
+  char ppath[PATH_MAX] = "(null)";
+  proc_pidpath(message.pid, ppath, PATH_MAX);
+  e.fileopDetails.processname = @(message.pname);
+  e.fileopDetails.processpath = @(ppath);
+
+  [self writeProtoToDisk:e];
+}
+
+- (void)logFileModification:(santa_message_t)message {
+  if ([[SNTConfigurator configurator] protoLogging]) {
+    [self protoFileModification:message];
+    return;
+  }
+
+  NSString *action, *newpath;
   NSString *path = @(message.path);
 
   switch (message.action) {
@@ -107,6 +217,8 @@
   LOGI(@"%@", outStr);
 }
 
+#pragma mark Executions
+
 - (void)logDeniedExecution:(SNTCachedDecision *)cd withMessage:(santa_message_t)message {
   [self logExecution:message withDecision:cd];
 }
@@ -119,7 +231,83 @@
   [self logExecution:message withDecision:cd];
 }
 
+- (void)protoExecution:(santa_message_t)message withDecision:(SNTCachedDecision *)cd {
+  SNTEventLogMessage *e = [[SNTEventLogMessage alloc] init];
+  e.timestamp = [[NSDate date] timeIntervalSince1970];
+  e.action = SNTEventLogMessage_Action_Execute;
+
+  switch (cd.decision) {
+    case SNTEventStateBlockBinary:
+    case SNTEventStateBlockCertificate:
+    case SNTEventStateBlockScope:
+    case SNTEventStateBlockUnknown:
+      e.execDetails.denied = YES;
+      break;
+    case SNTEventStateAllowBinary:
+    case SNTEventStateAllowCertificate:
+    case SNTEventStateAllowScope:
+    case SNTEventStateAllowUnknown:
+    default: {
+      e.execDetails.denied = NO;
+      NSMutableArray *array = [NSMutableArray array];
+      [self addArgsForPid:message.pid toString:nil toArray:array];
+      e.execDetails.argsArray = array;
+      break;
+    }
+  }
+
+  switch (cd.decision) {
+    case SNTEventStateAllowBinary:
+    case SNTEventStateBlockBinary:
+      e.execDetails.reason = SNTEventLogMessage_EventLogMessageExec_Reason_Binary;
+      break;
+    case SNTEventStateAllowCertificate:
+    case SNTEventStateBlockCertificate:
+      e.execDetails.reason = SNTEventLogMessage_EventLogMessageExec_Reason_Certificate;
+      break;
+    case SNTEventStateAllowScope:
+    case SNTEventStateBlockScope:
+      e.execDetails.reason = SNTEventLogMessage_EventLogMessageExec_Reason_Scope;
+      break;
+    case SNTEventStateAllowUnknown:
+    case SNTEventStateBlockUnknown:
+      e.execDetails.reason = SNTEventLogMessage_EventLogMessageExec_Reason_Unknown;
+      break;
+    default:
+      e.execDetails.reason = SNTEventLogMessage_EventLogMessageExec_Reason_Notrunning;
+      break;
+  }
+
+  e.execDetails.details = cd.decisionExtra;
+
+  e.sha256 = cd.sha256;
+  e.path = @(message.path);
+
+  SNTEventLogMessage_EventLogMessageExec_Cert *cert =
+      [[SNTEventLogMessage_EventLogMessageExec_Cert alloc] init];
+  cert.sha256 = cd.certSHA256;
+  cert.commonName = cd.certCommonName;
+  [e.execDetails.certsArray addObject:cert];
+
+  e.pid = message.pid;
+  e.ppid = message.ppid;
+  e.uid = message.uid;
+  e.gid = message.gid;
+
+  struct passwd *pw = getpwuid(message.uid);
+  if (pw) e.username = @(pw->pw_name);
+  struct group *gr = getgrgid(message.gid);
+  if (gr) e.groupname = @(gr->gr_name);
+
+  [self writeProtoToDisk:e];
+}
+
 - (void)logExecution:(santa_message_t)message withDecision:(SNTCachedDecision *)cd {
+  if ([[SNTConfigurator configurator] protoLogging]) {
+    [self protoExecution:message withDecision:cd];
+    return;
+  }
+
   NSString *d, *r;
   BOOL logArgs = NO;
 
@@ -178,7 +366,8 @@
   [outLog appendFormat:@"|sha256=%@|path=%@", cd.sha256, [self sanitizeString:@(message.path)]];
 
   if (logArgs) {
-    [self addArgsForPid:message.pid toString:outLog];
+    [outLog appendString:@"|args="];
+    [self addArgsForPid:message.pid toString:outLog toArray:nil];
   }
 
   if (cd.certSHA256) {
@@ -209,8 +398,47 @@
   LOGI(@"%@", outLog);
 }
 
+#pragma mark Disk Appear/Disappear
+
+- (void)protoDiskAppeared:(NSDictionary *)diskProperties {
+  SNTEventLogMessage *e = [[SNTEventLogMessage alloc] init];
+
+  e.timestamp = [[NSDate date] timeIntervalSince1970];
+  e.action = SNTEventLogMessage_Action_Diskappear;
+
+  NSString *dmgPath = @"";
+  NSString *serial = @"";
+  if ([diskProperties[@"DADeviceModel"] isEqual:@"Disk Image"]) {
+    dmgPath = [self diskImageForDevice:diskProperties[@"DADevicePath"]];
+  } else {
+    serial = [self serialForDevice:diskProperties[@"DADevicePath"]];
+    serial = [serial stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+  }
+
+  NSString *model = [NSString stringWithFormat:@"%@ %@",
+                     diskProperties[@"DADeviceVendor"] ?: @"",
+                     diskProperties[@"DADeviceModel"] ?: @""];
+  model = [model stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+
+  e.path = [diskProperties[@"DAVolumePath"] path];
+  e.diskDetails.volume = diskProperties[@"DAVolumeName"];
+  e.diskDetails.bsdname = diskProperties[@"DAMediaBSDName"];
+  e.diskDetails.fs = diskProperties[@"DAVolumeKind"];
+  e.diskDetails.model = model;
+  e.diskDetails.serial = serial;
+  e.diskDetails.bus = diskProperties[@"DADeviceProtocol"];
+  e.diskDetails.dmgpath = dmgPath;
+
+  [self writeProtoToDisk:e];
+}
+
 - (void)logDiskAppeared:(NSDictionary *)diskProperties {
   if (![diskProperties[@"DAVolumeMountable"] boolValue]) return;
+
+  if ([[SNTConfigurator configurator] protoLogging]) {
+    [self protoDiskAppeared:diskProperties];
+    return;
+  }
 
   NSString *dmgPath = @"";
   NSString *serial = @"";
@@ -237,8 +465,25 @@
        dmgPath);
 }
 
+- (void)protoDiskDisappeared:(NSDictionary *)diskProperties {
+  SNTEventLogMessage *e = [[SNTEventLogMessage alloc] init];
+
+  e.timestamp = [[NSDate date] timeIntervalSince1970];
+  e.action = SNTEventLogMessage_Action_Diskdisappear;
+  e.path = [diskProperties[@"DAVolumePath"] path];
+  e.diskDetails.volume = diskProperties[@"DAVolumeName"];
+  e.diskDetails.bsdname = diskProperties[@"DAMediaBSDName"];
+
+  [self writeProtoToDisk:e];
+}
+
 - (void)logDiskDisappeared:(NSDictionary *)diskProperties {
   if (![diskProperties[@"DAVolumeMountable"] boolValue]) return;
+
+  if ([[SNTConfigurator configurator] protoLogging]) {
+    [self protoDiskDisappeared:diskProperties];
+    return;
+  }
 
   LOGI(@"action=DISKDISAPPEAR|mount=%@|volume=%@|bsdname=%@",
        [diskProperties[@"DAVolumePath"] path] ?: @"",
@@ -336,7 +581,7 @@
 /**
   Use sysctl to get the arguments for a PID, appended to the given string.
 */
-- (void)addArgsForPid:(pid_t)pid toString:(NSMutableString *)str {
+- (void)addArgsForPid:(pid_t)pid toString:(NSMutableString *)str toArray:(NSMutableArray *)array {
   size_t argsSizeEstimate = 0, argsSize = 0, index = 0;
 
   // Use stack space up to 128KiB.
@@ -382,14 +627,28 @@
 
   // Save the beginning of the arguments
   size_t stringStart = index;
+  size_t previousStart = stringStart;
 
   // Replace all NULLs with spaces up until the first environment variable
   int replacedNulls = 0;
   for (; index < argsSize; ++index) {
     if (bytes[index] == '\0') {
       ++replacedNulls;
-      if (replacedNulls == argc) break;
-      bytes[index] = ' ';
+      if (str) {
+        if (replacedNulls == argc) break;
+        bytes[index] = ' ';
+      } else if (array) {
+        NSString *sanitized = [self sanitizeCString:&bytes[previousStart]
+                                           ofLength:index - previousStart];
+        if (!sanitized) {
+          sanitized = [[NSString alloc] initWithBytes:(const void *)&bytes[previousStart]
+                                               length:(index - previousStart)
+                                             encoding:NSUTF8StringEncoding];
+        }
+        [array addObject:sanitized];
+        if (replacedNulls == argc) break;
+        previousStart = index + 1;
+      }
     }
   }
 
@@ -485,6 +744,19 @@
   }
 
   return serial;
+}
+
+- (void)writeProtoToDisk:(SNTEventLogMessage *)proto {
+  dispatch_async(self.writingQueue, ^{
+    [self.protoFileHandle seekToEndOfFile];
+    [self.protoFileHandle writeData:proto.delimitedData];
+    self.protoMessagesSaved++;
+    if (self.protoMessagesSaved >= 10000) {
+      self.protoMessagesSaved = 0;  // Prevent double-rollover
+      [self rollOverFile];
+
+    }
+  });
 }
 
 @end

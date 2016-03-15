@@ -1,0 +1,78 @@
+syntax = "proto2";
+option objc_class_prefix = "SNT";
+package SNT;
+
+message EventLogMessage {
+  optional int64 timestamp = 1;
+
+  enum Action {
+    UNKNOWN = 0;
+    EXECUTE = 1;
+    WRITE = 2;
+    RENAME = 3;
+    EXCHANGE = 4;
+    LINK = 5;
+    DELETE = 6;
+    DISKAPPEAR = 7;
+    DISKDISAPPEAR = 8;
+  }
+  optional Action action = 2;
+
+  optional string sha256 = 3;
+  optional string path = 4;
+
+  optional int64 pid = 5;
+  optional int64 ppid = 6;
+  optional int64 uid = 7;
+  optional int64 gid = 8;
+  optional string username = 9;
+  optional string groupname = 10;
+
+  message EventLogMessageExec {
+    optional bool denied = 1;
+
+    enum Reason {
+      UNKNOWN = 0;
+      BINARY = 1;
+      CERTIFICATE = 2;
+      SCOPE = 3;
+      NOTRUNNING = 4;
+    }
+    repeated string args = 2;
+    optional Reason reason = 3;
+    optional string details = 4;
+
+    message Cert {
+      optional string sha256 = 1;
+      optional string common_name = 2;
+      optional string organization_name = 3;
+      optional string organizational_unit_name = 4;
+      optional int64 valid_not_before = 5;
+      optional int64 valid_not_after = 6;
+    }
+    repeated Cert certs = 5;
+  }
+
+  message EventLogMessageFileOp {
+    optional string newpath = 1;
+
+    optional string processname = 2;
+    optional string processpath = 3;
+  }
+
+  message EventLogMessageDisk {
+    optional string volume = 1;
+    optional string bsdname = 2;
+    optional string fs = 3;
+    optional string model = 4;
+    optional string serial = 5;
+    optional string bus = 6;
+    optional string dmgpath = 7;
+  }
+
+  oneof message_details {
+    EventLogMessageExec exec_details = 11;
+    EventLogMessageFileOp fileop_details = 12;
+    EventLogMessageDisk disk_details = 13;
+  }
+}

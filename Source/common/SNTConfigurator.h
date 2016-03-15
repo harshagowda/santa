@@ -220,6 +220,12 @@ extern NSString *const kDefaultConfigFilePath;
 @property(readonly, nonatomic) NSString *syncClientAuthCertificateIssuer;
 
 ///
+///  When enabled, logging will be written out in ProtoBuf format instead
+///  of plain text.
+///
+@property(readonly) BOOL protoLogging;
+
+///
 ///  Retrieve an initialized singleton configurator object using the default file path.
 ///
 + (instancetype)configurator;

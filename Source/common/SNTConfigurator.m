@@ -339,6 +339,10 @@ static NSString *const kFCMGlobalRuleLeeway = @"FCMGlobalRuleLeeway";
   return (leeway < 60) ? 600 : leeway;
 }
 
+- (BOOL)protoLogging {
+  return ([self.configData[@"ProtoLogging"] boolValue]);
+}
+
 - (void)reloadConfigData {
   NSFileManager *fm = [NSFileManager defaultManager];
   if (![fm fileExistsAtPath:self.configFilePath]) {

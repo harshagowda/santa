@@ -93,6 +93,11 @@ int main(int argc, const char *argv[]) {
     // Do not wait on child processes
     signal(SIGCHLD, SIG_IGN);
 
+    // Do not die on SIGHUP, SIGUSR1, SIGUSR2.
+    signal(SIGHUP, SIG_IGN);
+    signal(SIGUSR1, SIG_IGN);
+    signal(SIGUSR2, SIG_IGN);
+
     NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
 
     if ([[[NSProcessInfo processInfo] arguments] containsObject:@"-v"]) {
