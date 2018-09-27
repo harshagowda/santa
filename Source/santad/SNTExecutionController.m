@@ -115,8 +115,8 @@ static size_t kLargeBinarySize = 30 * 1024 * 1024;
     [_driverManager postToKernelAction:ACTION_RESPOND_ACK forVnodeID:message.vnode_id];
   }
 
-  // If the binary is a critical system binary, don't check its signature. The binary was validated
-  // by santad at startup.
+  // If the binary is a critical system binary, don't check its signature.
+  // The binary was validated by santad at startup.
   SNTCachedDecision *cd = self.ruleTable.criticalSystemBinaries[binInfo.SHA256];
   MOLCodesignChecker *csInfo; // Needed further down in this scope.
   if (!cd) {
@@ -162,7 +162,7 @@ static size_t kLargeBinarySize = 30 * 1024 * 1024;
   // Log to database if necessary.
   if (cd.decision != SNTEventStateAllowBinary &&
       cd.decision != SNTEventStateAllowCompiler &&
-      cd.decision != SNTEventStateAllowTransitive && 
+      cd.decision != SNTEventStateAllowTransitive &&
       cd.decision != SNTEventStateAllowCertificate &&
       cd.decision != SNTEventStateAllowScope) {
     SNTStoredEvent *se = [[SNTStoredEvent alloc] init];
